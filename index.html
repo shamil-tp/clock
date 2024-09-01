@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLOCK</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Londrina+Outline&family=New+Amsterdam&family=Pixelify+Sans:wght@400..700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .new-amsterdam-regular {
+            font-family: "New Amsterdam", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        .londrina-outline-regular {
+            font-family: "Londrina Outline", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .pixelify-sans {
+            font-family: "Pixelify Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .hero {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #08001f, #30197d);
+            color: #fff;
+            position: relative;
+        }
+
+        .container {
+            width: 800px;
+            height: 180px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .container::before {
+            content: '';
+            width: 180px;
+            height: 180px;
+            border-radius: 5px;
+            background: #f41b75;
+            position: absolute;
+            left: -50px;
+            top: -50px;
+            z-index: -1;
+        }
+
+        .container::after {
+            content: '';
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: #419aff;
+            position: absolute;
+            right: -30px;
+            bottom: -50px;
+            z-index: -1;
+        }
+
+        .clock {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(40px);
+            transition: background-color 0.5s ease; /* Smooth color transition */
+        }
+
+        .clock span {
+            font-size: 80px;
+            display: inline-block;
+            width: 110px;
+            text-align: center;
+            position: relative;
+        }
+
+        .clock span::after {
+            font-size: 16px;
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translatex(-50%);
+        }
+
+        #sec {
+            background-image: linear-gradient(90.5deg, rgba(152, 45, 255, 1) 0.7%, rgba(90, 241, 255, 1) 51.5%, rgba(65, 239, 164, 1) 100.6%);
+            background-clip: text;
+            color: transparent;
+        }
+
+        #hrs::after {
+            content: 'HOURS';
+        }
+
+        #min::after {
+            font-family: "New Amsterdam", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            content: 'MINS';
+        }
+
+        #sec::after {
+            content: 'SEC';
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="new-amsterdam-regular">
+    <div class="hero">
+        <div class="container">
+            <div class="clock" id="clk">
+                <span id="hrs" class="new-amsterdam-regular">00</span>
+                <span>:</span>
+                <span id="min" class="londrina-outline-regular">00</span>
+                <span>:</span>
+                <span id="sec" class="new-amsterdam-regular">00</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let hrs = document.getElementById("hrs");
+        let min = document.getElementById("min");
+        let sec = document.getElementById("sec");
+        let clock = document.getElementById("clk");
+
+        setInterval(() => {
+            let currentTime = new Date();
+
+            // Update time display
+            hrs.innerHTML = (currentTime.getHours() < 10 ? "0" : "") + currentTime.getHours();
+            min.innerHTML = (currentTime.getMinutes() < 10 ? "0" : "") + currentTime.getMinutes();
+            sec.innerHTML = (currentTime.getSeconds() < 10 ? "0" : "") + currentTime.getSeconds();
+
+            // Update background color
+            let seconds = currentTime.getSeconds();
+            let colorValue1 = Math.floor((seconds / 60) * 255); // Scale seconds to 0-255
+            let colorValue2 = Math.floor((seconds / 60) * 255); // Scale seconds to 0-255
+            let colorValue3 = Math.floor((seconds / 60) * 255); // Scale seconds to 0-255
+            console.log(colorValue1,colorValue2,colorValue3);
+            clock.style.backgroundColor = `rgba(155, ${colorValue2}, 108,.35)`;
+        }, 1000);
+    </script>
+</body>
+</html>
